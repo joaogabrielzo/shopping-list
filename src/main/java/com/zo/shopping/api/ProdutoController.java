@@ -35,4 +35,20 @@ public class ProdutoController {
 
     return ResponseEntity.created(URI.create("http://localhost:8080/v1/produtos" + p.getId())).build();
   }
+
+  @PutMapping("/{id}")
+  public ResponseEntity updateProduto(@PathVariable("id") Long id, Produto produto) {
+    Produto p = service.updateProduto(id, produto);
+
+    return ResponseEntity.ok(p);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity deleteProduto(@PathVariable("id") Long id) {
+    Boolean deleted = service.deleteProduto(id);
+
+    return deleted ?
+           ResponseEntity.ok("Produto deletado") :
+           ResponseEntity.badRequest().build();
+  }
 }
